@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1532994396 source:d:\work\patterns\code\patterns\flyweight\main.c
+	<stdio.h>
+	<stdlib.h>
+	"FlyweightDefs.h"
+	"Flyweight.h"
+
+1532994402 d:\work\patterns\code\patterns\flyweight\flyweight.h
+	"FlyweightDefs.h"
+
+1532994379 source:d:\work\patterns\code\patterns\flyweight\flyweight.c
+	<string.h>
+	"Flyweight.h"
+
+1532994411 d:\work\patterns\code\patterns\flyweight\flyweightfabric.h
+	"FlyweightDefs.h"
+
+1532993664 d:\work\patterns\code\patterns\flyweight\flyweightdefs.h
+	<stdint.h>
+
+1532994385 source:d:\work\patterns\code\patterns\flyweight\flyweightfabric.c
+	"FlyweightFabric.h"
+

@@ -10,11 +10,16 @@ typedef enum
     FW_OPT_DEFAULT
 }FwOpt_t;
 
-typedef void (*FwFn) (void);
+typedef void (*FwFunct) (void);
 
 typedef struct {
     uint8_t field1;
-    FwFn fn1;
+    FwFunct funct;
+} FwFabric_t;
+
+typedef struct {
+    FwFabric_t FwFabric;
+    // other fields
 } Fw_t;
 
 #endif // FLYWEIGHTDEFS_H_INCLUDED

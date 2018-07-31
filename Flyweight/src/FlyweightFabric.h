@@ -3,6 +3,6 @@
 
 #include "FlyweightDefs.h"
 
-Fw_t * FwFabric_Get(FwOpt_t opt);
+FwFabric_t * FwFabric_Get(FwOpt_t opt);
 
 #endif // FLYWEIGHTFABRIC_H_INCLUDED

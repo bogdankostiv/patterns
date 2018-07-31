@@ -21,3 +21,26 @@
 1532994385 source:d:\work\patterns\code\patterns\flyweight\flyweightfabric.c
 	"FlyweightFabric.h"
 
+1533030001 source:d:\projects\patterns\repo\patterns\flyweight\src\flyweight.c
+	<string.h>
+	"Flyweight.h"
+
+1533029524 d:\projects\patterns\repo\patterns\flyweight\src\flyweight.h
+	"FlyweightDefs.h"
+
+1533029828 d:\projects\patterns\repo\patterns\flyweight\src\flyweightdefs.h
+	<stdint.h>
+
+1533030102 source:d:\projects\patterns\repo\patterns\flyweight\src\flyweightfabric.c
+	<stdio.h>
+	"FlyweightFabric.h"
+
+1533030021 d:\projects\patterns\repo\patterns\flyweight\src\flyweightfabric.h
+	"FlyweightDefs.h"
+
+1533029524 source:d:\projects\patterns\repo\patterns\flyweight\src\main.c
+	<stdio.h>
+	<stdlib.h>
+	"FlyweightDefs.h"
+	"Flyweight.h"
+

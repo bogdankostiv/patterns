@@ -1,18 +1,20 @@
+#include <stdio.h>
 #include <string.h>
+#include "FlyweightFabric.h"
 #include "Flyweight.h"
 
 void Fw_Init(Fw_t *inst, FwOpt_t opt)
 {
-    Fw_t *FwReceived = FwFabric_Get(opt);
-    memcpy(inst, FwReceived, sizeof(*inst));
+    FwFabric_t *FwFabricReceived = FwFabric_Get(opt);
+    memcpy(&inst->FwFabric, FwFabricReceived, sizeof(inst->FwFabric));
 }
 
 void Fw_Action(Fw_t *inst)
 {
-    printf("FlyWeight test: %d\n", inst->field1);
+    printf("FlyWeight test: %d\n", inst->FwFabric.field1);
 }
 
 void Fw_ActionWitFn(Fw_t *inst)
 {
-    inst->fn1();
+    inst->FwFabric.funct();
 }

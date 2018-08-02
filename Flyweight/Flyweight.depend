@@ -21,8 +21,10 @@
 1532994385 source:d:\work\patterns\code\patterns\flyweight\flyweightfabric.c
 	"FlyweightFabric.h"
 
-1533030001 source:d:\projects\patterns\repo\patterns\flyweight\src\flyweight.c
+1533030226 source:d:\projects\patterns\repo\patterns\flyweight\src\flyweight.c
+	<stdio.h>
 	<string.h>
+	"FlyweightFabric.h"
 	"Flyweight.h"
 
 1533029524 d:\projects\patterns\repo\patterns\flyweight\src\flyweight.h

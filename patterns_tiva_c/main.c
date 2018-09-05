@@ -1,86 +1,18 @@
-//*****************************************************************************
-//
-// uart_polled.c - Example demonstrating UART polled I/O.
-//
-// Copyright (c) 2010-2017 Texas Instruments Incorporated.  All rights reserved.
-// Software License Agreement
-//
-//   Redistribution and use in source and binary forms, with or without
-//   modification, are permitted provided that the following conditions
-//   are met:
-//
-//   Redistributions of source code must retain the above copyright
-//   notice, this list of conditions and the following disclaimer.
-//
-//   Redistributions in binary form must reproduce the above copyright
-//   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the
-//   distribution.
-//
-//   Neither the name of Texas Instruments Incorporated nor the names of
-//   its contributors may be used to endorse or promote products derived
-//   from this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-// This is part of revision 2.1.4.178 of the Tiva Firmware Development Package.
-//
-//*****************************************************************************
-
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
 #include "errTypes.h"
 #include "inc/hw_memmap.h"
-//#include "driverlib/gpio.h"
-//#include "driverlib/pin_map.h"
 #include "driverlib/sysctl.h"
-//#include "driverlib/uart.h"
 #include "patt/drvUartFlwt.h"
 
-//*****************************************************************************
-//
-//! \addtogroup uart_examples_list
-//! <h1>UART Polled I/O (uart_polled)</h1>
-//!
-//! This example shows how to set up the UART and use polled I/O methods
-//! for transmitting and receiving UART data.  The example receives characters
-//! from UART0 and retransmits the same character using UART0.  It can be
-//! tested by using a serial terminal program on a host computer.  This
-//! example will echo every character that is type until the return/enter key
-//! is pressed.
-//!
-//! This example uses the following peripherals and I/O signals.  You must
-//! review these and change as needed for your own board:
-//! - UART0 peripheral
-//! - GPIO Port A peripheral (for UART0 pins)
-//! - UART0RX - PA0
-//! - UART0TX - PA1
-//
-//*****************************************************************************
-
-
-
 drvUart_t uart0;
+drvUart_t uart1;
 
+void initClocks(void);
+void delay(void);
 
-//*****************************************************************************
-//
-// Configure the UART and perform reads and writes using polled I/O.
-//
-//*****************************************************************************
-int
-main(void)
+void initClocks(void)
 {
 #if defined(TARGET_IS_TM4C129_RA0) ||                                         \
     defined(TARGET_IS_TM4C129_RA1) ||                                         \
@@ -88,13 +20,9 @@ main(void)
     uint32_t ui32SysClock;
 #endif
 
-    //char cThisChar;
-
-    //
     // Set the clocking to run directly from the external crystal/oscillator.
     // TODO: The SYSCTL_XTAL_ value must be changed to match the value of the
     // crystal on your board.
-    //
 #if defined(TARGET_IS_TM4C129_RA0) ||                                         \
     defined(TARGET_IS_TM4C129_RA1) ||                                         \
     defined(TARGET_IS_TM4C129_RA2)
@@ -105,115 +33,32 @@ main(void)
     SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN |
                    SYSCTL_XTAL_16MHZ);
 #endif
+}
 
+void delay(void)
+{
     volatile uint32_t ui32Loop;
 
+    for(ui32Loop = 0; ui32Loop < 200000; ui32Loop++)
+    {
+    }
+}
+
+int main(void)
+{
+    char strUart0[] = "UART0 test\r\n";
+    char strUart1[] = "UART1 test\r\n";
+
+    initClocks();
 
     drvUartFlwt_Init(&uart0, DRVUART_UART0);
+    drvUartFlwt_Init(&uart1, DRVUART_UART1);
 
     while (1)
     {
-        drvUartFlwt_Write(&uart0, "test\n", strlen("test\n"));
+        drvUartFlwt_Write(&uart0, (uint8_t*) strUart0, sizeof(strUart0));
+        drvUartFlwt_Write(&uart1, (uint8_t*) strUart1, sizeof(strUart1));
+        delay();
 
-        // Delay for a bit.
-        for(ui32Loop = 0; ui32Loop < 200000; ui32Loop++)
-        {
-        }
     }
-
-    /*
-
-
-    //
-    // Enable the GPIO port that is used for the on-board LED.
-    //
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
-
-    //
-    // Check if the peripheral access is enabled.
-    //
-    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF))
-    {
-    }
-
-    //
-    // Enable the GPIO pin for the LED (PF3).  Set the direction as output, and
-    // enable the GPIO pin for digital function.
-    //
-    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_3);
-
-
-    //
-    // Loop forever.
-    //
-    while(1)
-    {
-        //
-        // Turn on the LED.
-        //
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, GPIO_PIN_3);
-
-        //
-        // Delay for a bit.
-        //
-        for(ui32Loop = 0; ui32Loop < 200000; ui32Loop++)
-        {
-        }
-
-        //
-        // Turn off the LED.
-        //
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
-
-        //
-        // Delay for a bit.
-        //
-        for(ui32Loop = 0; ui32Loop < 200000; ui32Loop++)
-        {
-        }
-    }
-
-
-
-    //
-    // Put a character to show start of example.  This will display on the
-    // terminal.
-    //
-    UARTCharPut(UART0_BASE, '!');
-
-    //
-    // Enter a loop to read characters from the UART, and write them back
-    // (echo).  When a line end is received, the loop terminates.
-    //
-    do
-    {
-        //
-        // Read a character using the blocking read function.  This function
-        // will not return until a character is available.
-        //
-        cThisChar = UARTCharGet(UART0_BASE);
-
-        //
-        // Write the same character using the blocking write function.  This
-        // function will not return until there was space in the FIFO and
-        // the character is written.
-        //
-        UARTCharPut(UART0_BASE, cThisChar);
-    }
-    while((cThisChar != '\n') && (cThisChar != '\r'));
-
-    //
-    // Put a character to show the end of the example.  This will display on
-    // the terminal.
-    //
-    UARTCharPut(UART0_BASE, '@');
-
-    //
-    // Return no errors
-    //
-
-
-     */
-
-    return(0);
 }

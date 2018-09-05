@@ -1,8 +1,9 @@
-/*
- * drvUartFlwtDefs.h
+/**
+ * @file drvUartFlwtDefs.h
+ * @author bogdan.kostiv
+ * @date 3.08.2018
  *
- *  Created on: 3 ρεπο. 2018 π.
- *      Author: bogdan.kostiv
+ * @brief
  */
 
 #ifndef PATT_DRVUARTFLWTDEFS_H_
@@ -10,6 +11,9 @@
 
 #include <stdint.h>
 
+/**
+ * @brief Enum for object selection in fligweight
+ */
 typedef enum
 {
     DRVUART_UART0 = 0,
@@ -17,6 +21,9 @@ typedef enum
     DRVUART_AMOUNT
 } drvUart_FlwtFab_t;
 
+/**
+ * @brief Additional enums for HW configuration
+ */
 typedef enum
 {
     DRVUART_PARITY_NONE,
@@ -43,6 +50,20 @@ typedef enum
     DRVUART_STOPBIT_AMOUNT,
 }drvUart_StopBit_t;
 
+/**
+ * @brief Configuration structure for UARTs
+ */
+typedef struct
+{
+    uint32_t baudRate;
+    drvUart_Parity_t parity;
+    drvUart_Frame_t frameSize;
+    drvUart_StopBit_t stopBit;
+}drvUartConf_t;
+
+/**
+ *@brief  Flyweight factory structure
+ */
 typedef struct
 {
     uint32_t sysCrtlUartAddr;
@@ -52,19 +73,16 @@ typedef struct
     uint32_t gpioRxTxPortAddr;
     uint32_t gpioRxTxPinMap;
     uint32_t uartBaseaddr;
-    uint32_t uartDefBaudrate;
-    drvUart_Parity_t uartDefParity;
-    drvUart_Frame_t uartDefFrame;
-    drvUart_StopBit_t uartDefStopBit;
+    drvUartConf_t defaultConfig;
 }drvUart_Flwt_t;
 
+/**
+ * @brief Basic structure for objects
+ */
 typedef struct
 {
-    drvUart_Flwt_t uartFlwt;
-    uint32_t baudRate;
-    drvUart_Parity_t parity;
-    drvUart_Frame_t frameSize;
-    drvUart_StopBit_t stopBit;
+    uint32_t uartBaseaddr;
+    drvUartConf_t config;
 }drvUart_t;
 
 

@@ -9,7 +9,7 @@
 #ifndef PATT_DRVUARTFLWTFACTORY_H_
 #define PATT_DRVUARTFLWTFACTORY_H_
 
-#include "patt/drvUartFlwtDefs.h"
+#include "patt/Flyweight/drvUartFlwtDefs.h"
 
 /**
  * @brief Default UART configurations

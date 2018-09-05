@@ -13,8 +13,8 @@
 #include "driverlib/gpio.h"
 #include "driverlib/pin_map.h"
 #include "driverlib/uart.h"
-#include "patt/drvUartFlwtFactory.h"
-#include "patt/drvUartFlwt.h"
+#include "patt/Flyweight/drvUartFlwtFactory.h"
+#include "patt/Flyweight/drvUartFlwt.h"
 
 static const uint32_t drvUart_ParityTable[DRVUART_PARITY_AMOUNT] =
 {

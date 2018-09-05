@@ -4,13 +4,13 @@
 #include "errTypes.h"
 #include "inc/hw_memmap.h"
 #include "driverlib/sysctl.h"
-#include "patt/drvUartFlwt.h"
+#include "patt/SysTickDrv.h"
+#include "patt/Flyweight/drvUartFlwt.h"
 
 drvUart_t uart0;
 drvUart_t uart1;
 
 void initClocks(void);
-void delay(void);
 
 void initClocks(void)
 {
@@ -35,14 +35,6 @@ void initClocks(void)
 #endif
 }
 
-void delay(void)
-{
-    volatile uint32_t ui32Loop;
-
-    for(ui32Loop = 0; ui32Loop < 200000; ui32Loop++)
-    {
-    }
-}
 
 int main(void)
 {
@@ -51,14 +43,15 @@ int main(void)
 
     initClocks();
 
+    SysTickDrv_Init();
+
     drvUartFlwt_Init(&uart0, DRVUART_UART0);
     drvUartFlwt_Init(&uart1, DRVUART_UART1);
 
     while (1)
     {
-        drvUartFlwt_Write(&uart0, (uint8_t*) strUart0, sizeof(strUart0));
-        drvUartFlwt_Write(&uart1, (uint8_t*) strUart1, sizeof(strUart1));
-        delay();
-
+        drvUartFlwt_Write(&uart0, (uint8_t*) strUart0, strlen(strUart0));
+        drvUartFlwt_Write(&uart1, (uint8_t*) strUart1, strlen(strUart1));
+        SysTickDrv_DelayMs(1000);
     }
 }

@@ -11,7 +11,7 @@
 
 
 #include "errTypes.h"
-#include "patt/drvUartFlwtDefs.h"
+#include "patt/Flyweight/drvUartFlwtDefs.h"
 
 /**
  * @brief Uart initialization

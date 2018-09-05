@@ -9,7 +9,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "patt/drvUartFlwtFactory.h"
+#include "patt/Flyweight/drvUartFlwtFactory.h"
 #include "inc/hw_memmap.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/pin_map.h"

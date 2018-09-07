@@ -4,13 +4,19 @@
 #include "errTypes.h"
 #include "inc/hw_memmap.h"
 #include "driverlib/sysctl.h"
-#include "patt/SysTickDrv.h"
+#include "patt/drvSysTick.h"
+#include "patt/ulTimer.h"
 #include "patt/Flyweight/drvUartFlwt.h"
 
 drvUart_t uart0;
 drvUart_t uart1;
 
+timer_t timer1;
+timer_t timer2;
+
 void initClocks(void);
+void timer1Fn(void* ctx);
+void timer2Fn(void* ctx);
 
 void initClocks(void)
 {
@@ -35,23 +41,43 @@ void initClocks(void)
 #endif
 }
 
+void timer1Fn(void* ctx)
+{
+    char strUart0[] = "UART0 test\r\n";
+
+    drvUartFlwt_Write(&uart0, (uint8_t*) strUart0, strlen(strUart0));
+}
+
+void timer2Fn(void* ctx)
+{
+    char strUart1[] = "UART1 test\r\n";
+
+    drvUartFlwt_Write(&uart1, (uint8_t*) strUart1, strlen(strUart1));
+}
 
 int main(void)
 {
-    char strUart0[] = "UART0 test\r\n";
-    char strUart1[] = "UART1 test\r\n";
+
+
 
     initClocks();
 
-    SysTickDrv_Init();
+    drvSysTick_Init();
+
+    ulTimer_Init();
 
     drvUartFlwt_Init(&uart0, DRVUART_UART0);
     drvUartFlwt_Init(&uart1, DRVUART_UART1);
 
+    ulTimer_Create(&timer1, &timer1Fn, NULL, 1000, true);
+    ulTimer_Create(&timer2, &timer2Fn, NULL, 2000, true);
+
     while (1)
     {
-        drvUartFlwt_Write(&uart0, (uint8_t*) strUart0, strlen(strUart0));
-        drvUartFlwt_Write(&uart1, (uint8_t*) strUart1, strlen(strUart1));
-        SysTickDrv_DelayMs(1000);
+
+
+        //drvSysTick_DelayMs(1000);
+
+        ulTimer_Run();
     }
 }

@@ -57,9 +57,6 @@ void timer2Fn(void* ctx)
 
 int main(void)
 {
-
-
-
     initClocks();
 
     drvSysTick_Init();
@@ -74,10 +71,6 @@ int main(void)
 
     while (1)
     {
-
-
-        //drvSysTick_DelayMs(1000);
-
         ulTimer_Run();
     }
 }

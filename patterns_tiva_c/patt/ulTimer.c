@@ -96,7 +96,7 @@ void ulTimer_Run(void)
                 currentTimerNode->timer.lastTriggerTime = drvSysTick_GetTime();
             }
 
-            currentTimerNode = timerCtr.timers->next;
+            currentTimerNode = currentTimerNode->next;
         }
         else
         {

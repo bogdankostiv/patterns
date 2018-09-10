@@ -74,8 +74,30 @@ void ulTimer_Delete(timer_t* timer)
 {
     ASSERT(NULL != timer);
 
-    ulTimer_Suspend(timer);
-    //
+    timer_t * ñurrTimerNode = timerCtr.timers;
+    timer_t * prevTimerNode = NULL;
+
+    while (NULL != ñurrTimerNode)
+    {
+        if (ñurrTimerNode == timer)
+        {
+            ulTimer_Suspend(timer);
+
+            if (NULL == prevTimerNode) // HEAD
+            {
+                timerCtr.timers = NULL;
+            }
+            else
+            {
+                prevTimerNode->next = ñurrTimerNode->next;
+            }
+
+            break;
+        }
+        prevTimerNode = ñurrTimerNode;
+        ñurrTimerNode = ñurrTimerNode->next;
+    }
+
 
 }
 

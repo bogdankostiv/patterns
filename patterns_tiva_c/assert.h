@@ -17,7 +17,7 @@
          assert_fn(__FILE__, __LINE__);        \
     }
 #else
-#define ASSERT(cond) (void)(cond);
+#define ASSERT(cond) ((void)(0))
 #endif
 
 void assert_fn(char* module, int32_t line);

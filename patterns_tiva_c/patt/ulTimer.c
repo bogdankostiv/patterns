@@ -72,10 +72,10 @@ void ulTimer_Resume(timer_t* timer)
 
 void ulTimer_Delete(timer_t* timer)
 {
-    ASSERT(NULL != timer);
-
     timer_t * ñurrTimerNode = timerCtr.timers;
     timer_t * prevTimerNode = NULL;
+
+    ASSERT(NULL != timer);
 
     while (NULL != ñurrTimerNode)
     {

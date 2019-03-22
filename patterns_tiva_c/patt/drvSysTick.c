@@ -60,9 +60,9 @@ void drvSysTick_Init()
 
 void drvSysTick_registerExtCb(sysTickCb_t* cb)
 {
-    ASSERT(NULL != cb);
-
     sysTickCb_t * node  = drvSysTick_GetLastCbNode();
+
+    ASSERT(NULL != cb);
 
     cb->next = NULL;
     if (NULL != cb->fn)
@@ -102,9 +102,9 @@ bool drvSysTick_IsTimePassed(sysTickTime_t savedTime, sysTickTime_t period)
 
 void drvSysTick_DelayMs(sysTickTime_t delay)
 {
-    ASSERT(false != isInit);
-
     sysTickTime_t startTime = drvSysTick_GetTime();
+
+    ASSERT(false != isInit);
 
     while (true != drvSysTick_IsTimePassed(startTime, delay))
     {

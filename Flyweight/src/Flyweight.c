@@ -17,4 +17,5 @@ void Fw_Action(Fw_t *inst)
 void Fw_ActionWitFn(Fw_t *inst)
 {
     inst->FwFabric.funct();
+    
 }
